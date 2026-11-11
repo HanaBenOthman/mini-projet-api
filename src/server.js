@@ -1,0 +1,42 @@
+
+//imporation mtaa les modules 
+const express = require("express");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+
+// Houni na9raw les variables mel fichier .env
+dotenv.config();
+
+// creation mtaa l'application 
+const app = express();
+
+// tkhali el serveur yarkra les donnees bl formats JSON
+app.use(express.json());
+
+// creation mta3 route GET bech njarbou serveur
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "API REST fonctionne !"
+  });
+});
+// 7adadet el port eli bech yekhdem 3lih serveur
+const PORT = process.env.PORT || 3000;
+
+// connectina el serveur m3aa MongoDB 
+const startServer = async () => {
+  await connectDB();
+// demarrit el serveur 
+  app.listen(PORT, () => {
+    console.log(`Serveur demarre sur http://localhost:${PORT}`);
+  });
+};
+
+startServer();
+
+
+
+
+
+
+
+
