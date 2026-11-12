@@ -4,7 +4,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
-
+const projectRoutes = require("./routes/projectRoutes");
 // Houni na9raw les variables mel fichier .env
 dotenv.config();
 
@@ -15,6 +15,8 @@ const app = express();
 app.use(express.json());
 //tkoull l express eli les routes d'authentification  yebdew b /api/auth
 app.use("/api/auth", authRoutes);
+// les routes mtaa projets 
+app.use("/api/projects", projectRoutes);
 
 // creation mta3 route GET bech njarbou serveur
 app.get("/", (req, res) => {
