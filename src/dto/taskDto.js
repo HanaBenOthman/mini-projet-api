@@ -29,8 +29,19 @@ const createTaskDto = z.object({
 // Najmou nbaddlou champ wa7ed wala akther
 const updateTaskDto = createTaskDto.partial();
 
+
+// DTO bech tverifi l identifiant mtaa utilisateur eli bech nassigniwlou l tache
+const assignTaskDto = z.object({
+  // Lazem identifiant utilisateur ykoun ObjectId MongoDB s7i7
+  utilisateurAssigne: z.string().regex(
+    /^[0-9a-fA-F]{24}$/,
+    "Identifiant utilisateur invalide"
+  )
+}).strict();
+
 // nexportiw les DTO bech nestaamlouhom fil controllers
 module.exports = {
   createTaskDto,
-  updateTaskDto
+  updateTaskDto,
+   assignTaskDto
 };
