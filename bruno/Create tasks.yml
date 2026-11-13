@@ -1,0 +1,28 @@
+info:
+  name: Create tasks
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: http://localhost:3000/api/tasks
+  body:
+    type: json
+    data: |-
+      {
+        "titre": "Test creation inter-utilisateurs",
+        "description": "Tache creee par Hana dans le projet du manager",
+        "statut": "todo",
+        "deadline": "2026-12-20T18:00:00.000Z",
+        "projet": "6af59bd42141ce99569c015b"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRiMjk0MGY0ZGExMDQ1MjVkM2U5NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzk0NTkwNzgyLCJleHAiOjE3OTQ1OTQzODJ9.2zi2nxJwlpbVRwaHC4_JDbX0IWiZnZJl9JYQ_2zunbU
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

@@ -1,0 +1,24 @@
+info:
+  name: Upadate Project
+  type: http
+  seq: 7
+
+http:
+  method: PUT
+  url: http://localhost:3000/api/projects/6af597442141ce99569c0158
+  body:
+    type: json
+    data: |-
+      {
+        "statut": "termine"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRiMjk0MGY0ZGExMDQ1MjVkM2U5NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzk0NDg4NjIxLCJleHAiOjE3OTQ0OTIyMjF9.E-DWrx86P6dnir3ulSHlY9eB8jmKFNY-uBYExSBOohg
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

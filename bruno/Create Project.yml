@@ -1,0 +1,26 @@
+info:
+  name: Create Project
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:3000/api/projects
+  body:
+    type: json
+    data: |-
+      {
+        "nom": "Projet Test Suppression",
+        "description": "Projet temporaire pour tester la suppression des taches",
+        "statut": "en cours"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRjMGZlODFiZmZhZjJkOTkzYjkyMSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzk0NTkwNjQ1LCJleHAiOjE3OTQ1OTQyNDV9.OgrW8uDlmLKU896Sq61ed3gaMfyf8N_TfhaZrIYe2eU
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

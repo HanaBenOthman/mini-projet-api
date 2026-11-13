@@ -1,0 +1,25 @@
+info:
+  name: Get Projects
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: http://localhost:3000/api/projects
+  body:
+    type: json
+    data: |-
+      {
+        "login": "hana123",
+        "password": "hana12345"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRjMGZlODFiZmZhZjJkOTkzYjkyMSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzk0NTkwNjQ1LCJleHAiOjE3OTQ1OTQyNDV9.OgrW8uDlmLKU896Sq61ed3gaMfyf8N_TfhaZrIYe2eU
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

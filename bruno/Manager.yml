@@ -1,0 +1,18 @@
+info:
+  name: Manager
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: http://localhost:3000/api/auth/manager
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRjMGZlODFiZmZhZjJkOTkzYjkyMSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzk0NDI1MzAxLCJleHAiOjE3OTQ0Mjg5MDF9.m8hpUgMz3Susi9Y0oBcKp7azqWqzjaCWXT21hotkacg
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

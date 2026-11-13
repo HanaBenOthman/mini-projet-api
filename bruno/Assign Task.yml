@@ -1,0 +1,24 @@
+info:
+  name: Assign Task
+  type: http
+  seq: 14
+
+http:
+  method: PUT
+  url: http://localhost:3000/api/tasks/6af5f04276af39e5af94102a/assign
+  body:
+    type: json
+    data: |-
+      {
+        "utilisateurAssigne": "6af4b2940f4da104525d3e97"
+      }
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRiMjk0MGY0ZGExMDQ1MjVkM2U5NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzk0NTkwODk4LCJleHAiOjE3OTQ1OTQ0OTh9.L3aErgvsnTtmw44fg-YBiil18ZGxnUewI41C0BWKpU4
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

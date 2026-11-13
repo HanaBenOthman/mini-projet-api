@@ -1,0 +1,18 @@
+info:
+  name: Delete Project.
+  type: http
+  seq: 8
+
+http:
+  method: DELETE
+  url: http://localhost:3000/api/projects/6af73518e689962b1c2c536e
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRiMjk0MGY0ZGExMDQ1MjVkM2U5NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzk0NTg3MjM2LCJleHAiOjE3OTQ1OTA4MzZ9.1fDWdxCRahmRG_1YpnKINt_xDbx_6EdWebgE4fc2t6M
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

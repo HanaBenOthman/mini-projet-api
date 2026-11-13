@@ -1,0 +1,22 @@
+info:
+  name: récupérer les tâches
+  type: http
+  seq: 11
+
+http:
+  method: GET
+  url: http://localhost:3000/api/tasks?sortBy=prix
+  params:
+    - name: sortBy
+      value: prix
+      type: query
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRiMjk0MGY0ZGExMDQ1MjVkM2U5NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzk0NTgyOTU4LCJleHAiOjE3OTQ1ODY1NTh9.MyFKdooH25-HWaPphgBlpeChisFl3-dkEdEvWLWjpiA
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

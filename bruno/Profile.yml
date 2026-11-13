@@ -1,0 +1,21 @@
+info:
+  name: Profile
+  type: http
+  seq: 3
+
+http:
+  method: GET
+  url: http://localhost:3000/api/auth/profile
+  body:
+    type: json
+    data: "\n"
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhZjRiMjk0MGY0ZGExMDQ1MjVkM2U5NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzk0NDg1NTA1LCJleHAiOjE3OTQ0ODkxMDV9.vUmKiHh2QlsQ0elqYZ7lqBBmXtX4OaS4oMICGBXIrAU
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
