@@ -4,7 +4,7 @@ const {
   updateProjectDto
 } = require("../dto/projectDto");
 const Project = require("../models/Project");
-
+const Task = require("../models/task");
 // Fonction bech naamlou projet jdid
 
 const createProject = async (req, res) => {
@@ -222,6 +222,7 @@ const updateProject = async (req, res) => {
 
 // Fonction  tfaskh el projet
 const deleteProject = async (req, res) => {
+    console.log("TEST DELETE PROJECT - REQUETE RECUE");
   try {
     // tjib identifiant mtaa projet mel URL
     const { id } = req.params;
@@ -247,6 +248,8 @@ const deleteProject = async (req, res) => {
         message: "Seul le proprietaire peut supprimer ce projet"
       });
     }
+      // Nfaskhou les taches lkol elli marbouta bel projet
+    await Task.deleteMany({ projet: project._id });
 
     // tfaskh projet men MongoDB
     await project.deleteOne();
@@ -258,6 +261,7 @@ const deleteProject = async (req, res) => {
 
   } catch (error) {
     // Ken identifiant mtaa projet mch s7i7
+    console.error("Erreur suppression projet :", error);
     if (error.name === "CastError") {
       return res.status(400).json({
         message: "Identifiant du projet invalide"
