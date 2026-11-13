@@ -73,38 +73,98 @@ const createTask = async (req, res) => {
   }
 };
 
- // Fonction bech njibou liste mtaa les taches
+ 
+// Fonction bech njibou les taches avec recherche, filtre w tri
 const getTasks = async (req, res) => {
   try {
-    // Ken utilisateur manager, ynajem ychouf les taches lkol
-    if (req.user.role === "manager") {
-      const tasks = await Task.find()
-        .populate("projet", "nom statut")
-        .populate("utilisateurAssigne", "nom login");
+    // tjib les parametres mel URL
+    const {
+      search,
+      statut,
+      sortBy = "createdAt",
+      order = "desc"
+    } = req.query;
 
-      return res.status(200).json(tasks);
+    // t7aded les champs eli bsh naamlou behom el tri
+    const allowedSortFields = [
+      "titre",
+      "statut",
+      "deadline",
+      "createdAt"
+    ];
+
+    // tverifi eli champ mtaa tri s7i7
+    if (!allowedSortFields.includes(sortBy)) {
+      return res.status(400).json({
+        message: "Champ de tri invalide"
+      });
     }
 
-    // Ken utilisateur normal, nlawjou aal projets mteou
-    const projects = await Project.find({
-      proprietaire: req.user.id
-    }).select("_id");
+    // tverifi eli ordre mtaa tri s7i7
+    if (!["asc", "desc"].includes(order)) {
+      return res.status(400).json({
+        message: "Ordre de tri invalide"
+      });
+    }
 
-    // yekhou les identifiants mtaa projets mteou
-    const projectIds = projects.map((project) => project._id);
+    // t7adhr filtre mtaa recherche
+    const filter = {};
 
-    // yjib ken les taches marbouta b projets mteou
-    const tasks = await Task.find({
-      projet: { $in: projectIds }
-    })
+    // Ken utilisateur mch manager, ychouf ken taches mtaa projets mteou
+    if (req.user.role !== "manager") {
+
+      // tlawj aal projets eli teb3in l'utilisateur
+      const projects = await Project.find({
+        proprietaire: req.user.id
+      }).select("_id");
+
+      // tekhou l identifiants mtaa projets
+      const projectIds = projects.map((project) => project._id);
+
+      // tfiltri les taches selon projets mteou
+      filter.projet = { $in: projectIds };
+    }
+
+    //  recherche tlawj fil titre mtaa tache
+    if (typeof search === "string" && search.trim()) {
+
+      // t7mi les caracteres speciaux mtaa recherche
+      const safeSearch = search.trim()
+        .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+      // tlawj sans difference bin majuscule w minuscule
+      filter.titre = {
+        $regex: safeSearch,
+        $options: "i"
+      };
+    }
+
+    // Ken utilisateur 7at statut tverifih ken el contenu shih haseb l'autorisations tet3ada sinon message d'erreur
+    if (statut !== undefined) {
+      if (!["todo", "doing", "done"].includes(statut)) {
+        return res.status(400).json({
+          message: "Statut de la tache invalide"
+        });
+      }
+
+      // tzid statut lel filtre
+      filter.statut = statut;
+    }
+
+    // t7aded direction mtaa tri decroissant wala croissant 
+    const sortOrder = order === "asc" ? 1 : -1;
+
+    // tjib les taches selon les filtres w tri
+    const tasks = await Task.find(filter)
       .populate("projet", "nom statut")
-      .populate("utilisateurAssigne", "nom login");
+      .populate("utilisateurAssigne", "nom login")
+      .sort({ [sortBy]: sortOrder });
 
-    // yreturni liste mtaa les taches
+    // treturni liste mtaa les taches
     return res.status(200).json(tasks);
 
   } catch (error) {
-    // Ken tsir mochkla fil serveur
+    // Ken tsir mochkla fil serveur treterni erreur 
     return res.status(500).json({
       message: "Erreur lors de la recuperation des taches"
     });

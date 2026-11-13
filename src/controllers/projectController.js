@@ -60,26 +60,74 @@ const createProject = async (req, res) => {
 };
 
 
-// Fonction tjib liste mtaa les projets
+// Fonction tjib liste mtaa les projets w taaml recherche w tri
+
 const getProjects = async (req, res) => {
   try {
-    
-    let filter = {};
+    // djib les parametres  de recherche mel URL
+    const {
+      search,
+      statut,
+      sortBy = "createdAt",
+      order = "desc"
+    } = req.query;
 
-    // Ken utilisateur mch manager, tjib ken projets mteou
-    if (req.user.role !== "manager") {
-      filter = { proprietaire: req.user.id };
+    // thaded les champs eli bsh nest3mlouhom 
+    const allowedSortFields = ["nom", "createdAt", "statut"];
+
+    // tverifi eli champ mtaa tri s7i7 sinoon tabaath message d'erreur
+    if (!allowedSortFields.includes(sortBy)) { //includes tverifi ken sortBy existe fil liste wala lee
+      return res.status(400).json({
+        message: "Champ de tri invalide"
+      });
     }
 
-    // trecherchi aal projets selon el filtre
-    const projects = await Project.find(filter)
-      .populate("proprietaire", "nom login");
+    // tverifi eli ordre mtaa tri shih yaani l'ordre croissant ya decroissant sinon taffichi message d'rreur
+    if (!["asc", "desc"].includes(order)) {
+      return res.status(400).json({
+        message: "Ordre de tri invalide"
+      });
+    }
 
-    // treterni liste mtaa les projets
-    return res.status(200).json(projects);
-//message d'erreur
-  } catch (error) {
+    // Ken utilisateur mch manager, ychouf ken projets mteou
+    const filter = req.user.role === "manager"
+      ? {}
+      : { proprietaire: req.user.id }; // req.user feya eli feha les informations mtaa utilisateur connecte
+
+    //  recherche tlawj aal nom mtaa projet
+
+    if (typeof search === "string" && search.trim()) {//tverifie eli recherche chaine de caractere
     
+      const safeSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+      filter.nom = { $regex: safeSearch, $options: "i" };
+    }
+
+    // recherche bl statut 
+    //tverifi ken el client kteb les statuts autorisées mekechi tabaaith message d'erreur
+    if (statut !== undefined) {
+      if (!["en cours", "termine", "en pause"].includes(statut)) {
+        return res.status(400).json({
+          message: "Statut du projet invalide"
+        });
+      }
+
+      filter.statut = statut;
+    }
+
+    // t7adou direction mtaa tri ya croissant ya décroissant 
+    const sortOrder = order === "asc" ? 1 : -1;
+
+    // tjib les projets selon recherche, filtre w tri
+    const projects = await Project.find(filter)
+      .populate("proprietaire", "nom login")
+      .sort({ [sortBy]: sortOrder });
+
+    // treturni liste mtaa les projets
+    return res.status(200).json(projects);
+
+  } catch (error) {
+    // Ken tsir erreur fil serveur
     return res.status(500).json({
       message: "Erreur lors de la recuperation des projets"
     });
